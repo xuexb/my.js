@@ -5,6 +5,7 @@ module.exports = function(grunt) {
 
 
     var obj = {}; //初始化对象
+    var connect = obj.connect = {}; //web server
     var jshint = obj.jshint = {}; //jshint
 
 
@@ -16,10 +17,17 @@ module.exports = function(grunt) {
     jshint.options = {
         jshintrc: true
     }
-
-
     jshint.all = {
-        src: ['./Gruntfile.js' './src/**/*.js']
+        src: ['./Gruntfile.js', './src/**/*.js']
+    }
+
+    // http服务配置
+    connect.options = {
+        port: '8888',
+        base: './',
+        hostname: '127.0.0.1',
+        keepalive: true,
+        open: true
     }
 
 
@@ -30,4 +38,7 @@ module.exports = function(grunt) {
 
     //激活插件
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+
+    grunt.registerTask('default', ['connect']);
 }
