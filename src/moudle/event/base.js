@@ -19,7 +19,7 @@ define(function(){
     'use strict';
 
 
-    var pro;
+    var prototype;
 
     /**
      * 构造函数
@@ -31,32 +31,32 @@ define(function(){
     /**
      * 原型链
      */
-    pro = Event.prototype;
+    prototype = Event.prototype;
 
 
     /**
      * 触发事件
-     * @return {boolean} 是否有return false
+     * @param {string|object} type 事件名或者this指针
+     * @param {array} data 触发时附带的数据
+     * @return {boolean} 回调里是否有return false
      */
-    pro.trigger = function(type, type2){
+    prototype.trigger = function(type, data){
         var self = this,
+            obj = self,
             listeners,
-            i = 0,
-            args = arguments;
+            i = 0;
 
         //如果不是str则说明要改变this指针
         if('string' !== typeof(type)){
-            self = type;
-            type = type2;
-            args = [].slice.call(args, 2);
-        } else {
-            args = [].slice.call(args, 1);
+            obj = type;
+            type = data;
+            data = arguments[2];
         }
 
-        listeners = this.__getListener(type);
+        listeners = self.__getListener(type);
 
         for (;i < listeners.length; i++) {
-            if(listeners[i].callback.apply(self, args) === false){
+            if(listeners[i].callback.apply(self, data) === false){
                 return false;
             }
             if(listeners[i].one){
@@ -72,8 +72,9 @@ define(function(){
      * 添加事件
      * @param   {String}    事件类型
      * @param   {Function}  监听函数
+     * @return {object} self
      */
-    pro.on = function(type, callback){
+    prototype.on = function(type, callback){
         var self = this;
         self.__getListener(type).push({
             one: false,
@@ -83,7 +84,13 @@ define(function(){
     }
 
 
-    pro.one = function(type, callback){
+    /**
+     * 绑定一次事件
+     * @param  {string}   type     事件类型
+     * @param  {Function} callback 监听函数
+     * @return {object}            self
+     */
+    prototype.one = function(type, callback){
         var self = this;
         self.__getListener(type).push({
             callback: callback,
@@ -98,7 +105,7 @@ define(function(){
      * @param  {string} type 事件名
      * @return {array}      事件队列
      */
-    pro.__getListener = function(type) {
+    prototype.__getListener = function(type) {
         var listener = this.__listener;
         if (!listener[type]) {
             listener[type] = [];
@@ -111,9 +118,10 @@ define(function(){
     /**
      * 删除事件
      * @param   {String}    事件类型
-     * @param   {Function}  监听函数
+     * @param   {Function|undefined}  监听函数，如果为空则卸载全部type的事件
+     * @return {object} self
      */
-    pro.off = function(type, callback) {
+    prototype.off = function(type, callback) {
         var self = this,
             listeners = self.__getListener(type),
             i;
