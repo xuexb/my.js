@@ -1,6 +1,5 @@
 /**
  * 事件对象
- * @copyright 嫁拍
  * @author xieliang
  * @email admin@xuexb.com
  *
