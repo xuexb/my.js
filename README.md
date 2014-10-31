@@ -1,5 +1,8 @@
 # my.js
 
+> 基于 `jQuery` 和 `seajs` 的应用
+>
+> 如为标明均为原创
 
 ## install
 
