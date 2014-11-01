@@ -3,6 +3,7 @@
  * @copyright 嫁拍
  * @author xieliang
  * @email admin@xuexb.com
+ * @requires event.js,ajaxPage.css,artTemplate.js,jQuery.js
  *
  * @example
  *     1, var demo = new AjaxPage({
@@ -95,7 +96,7 @@ define(function(require){
         self.$('wrap').html('\
             <div class="ui-ajax">\
                 <div class="ui-ajax-error" data-dom="error"></div>\
-                <div class="ui-ajax-loading success" data-dom="loading"><span>加载中...</span></div>\
+                <div class="ui-ajax-loading" data-dom="loading"><span>加载中...</span></div>\
                 <div class="ui-ajax-list" data-dom="list"></div>\
                 <div class="ui-ajax-page" data-dom="page"></div>\
                 <div class="ui-ajax-mask" data-dom="mask"></div>\
@@ -130,14 +131,21 @@ define(function(require){
 
     /**
      * 绑定事件
-     * @param  {string} type     事件名， 支持 beforeSend请求前, success请求成功, error请求失败
+     * @param  {string} type     事件名， 支持 beforeSend请求前, success请求成功, error请求失败， page分页点击
      * @param  {function} calblack 回调方法
-     * @return {object}          当前实例
+     * @return {object}          self
      */
     prototype.on = function(type, calblack){
         return this.__event.on(type, calblack), this;
     }
 
+
+    /**
+     * 绑定一次性事件
+     * @param  {string} type     事件名， 支持 beforeSend请求前, success请求成功, error请求失败， page分页点击
+     * @param  {function} calblack 回调方法
+     * @return {object}          self
+     */
     prototype.one = function(type, calblack){
         return this.__event.one(type, calblack), this;
     }
@@ -145,9 +153,9 @@ define(function(require){
 
     /**
      * 卸载事件
-     * @param  {string} type     事件名， 支持 beforeSend请求前, success请求成功, error请求失败
-     * @param  {function} calblack 回调方法
-     * @return {object}          当前实例
+     * @param  {string} type     事件名， 支持 beforeSend请求前, success请求成功, error请求失败， page分页点击
+     * @param  {function|undefined} calblack 回调方法，为空则卸载全部type事件
+     * @return {object}          self
      */
     prototype.off = function(type, calblack){
         return this.__event.off(type, calblack), this;
@@ -158,6 +166,7 @@ define(function(require){
      * 设置/获取数据
      * @param  {string} key   要操作的key
      * @param  {string|undefined|null} value 如果为空则为获取，如果为null则为删除，否则为设置
+     * @return {object} self
      */
     prototype.data = function(key, value){
         var self = this;
@@ -182,6 +191,7 @@ define(function(require){
      * 发送请求
      * @param {object} param 发送携带的参数，该参数会合并为 config.data
      * @param {string} type 请求的类型，有reload,page,request,init等
+     * @return {object} self
      */
     prototype.request = function(param, type){
         var self = this,
@@ -490,17 +500,19 @@ define(function(require){
 
     /**
      * 设置滚动条滚动到容器顶
+     * @return {object} self
      */
     prototype.scrollTo = function(){
         var top = this.$('wrap').offset().top;
-        $('body, html').animate({ scrollTop: top + this.config.offsetTop}, 500, 'easeOutExpo')
+        $('body, html').animate({ scrollTop: top + this.config.offsetTop}, 500, 'easeOutExpo');
+        return self;
     }
 
 
 
     /**
      * 选择器
-     * @param  {string} name 要选择的东东，支持 wrap,page,list,loading
+     * @param  {string} name 要选择的东东，支持 wrap,page,list,loading,error,mask
      * @return {jQuery}     jquery对象
      */
     prototype.$ = function(name){
@@ -526,13 +538,14 @@ define(function(require){
     AjaxPage.defaults = {
         elem: null,//替换容器
         data: {
-            page_size: 15,
-            page: 1
+            page_size: 15,//每页多少个，必须参数
+            page: 1//当前页，必须参数
         },//向后端发送的东东
         url: '',//后端url
-        request: false,//是否开始请求
+        request: true,//是否开始请求
         offsetTop: 0,//x轴偏移
-        tpl: null//模板， 基于artTemplate
+        tpl: null,//模板字符串， 基于artTemplate
+        filterData: null//返回值数据过滤
     }
 
     return AjaxPage;

@@ -4,7 +4,7 @@
 >
 > 参考 `artDialog6.0`, `seajs`
 
-## API
+## Api
 
 ### Event.trigger
 
