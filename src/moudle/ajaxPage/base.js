@@ -30,7 +30,7 @@ define(function(require){
     var $ = require('./jquery'),
         Event = require('./event'),
         Template = require('./template'),
-        pro;
+        prototype;
 
 
     /**
@@ -81,13 +81,13 @@ define(function(require){
      * 原型链
      * @type {object}
      */
-    pro = AjaxPage.prototype;
+    prototype = AjaxPage.prototype;
 
 
     /**
      * 初始化
      */
-    pro.init = function(){
+    prototype.init = function(){
 
         var self = this,
             config = self.config;
@@ -134,11 +134,11 @@ define(function(require){
      * @param  {function} calblack 回调方法
      * @return {object}          当前实例
      */
-    pro.on = function(type, calblack){
+    prototype.on = function(type, calblack){
         return this.__event.on(type, calblack), this;
     }
 
-    pro.one = function(type, calblack){
+    prototype.one = function(type, calblack){
         return this.__event.one(type, calblack), this;
     }
 
@@ -149,7 +149,7 @@ define(function(require){
      * @param  {function} calblack 回调方法
      * @return {object}          当前实例
      */
-    pro.off = function(type, calblack){
+    prototype.off = function(type, calblack){
         return this.__event.off(type, calblack), this;
     }
 
@@ -159,7 +159,7 @@ define(function(require){
      * @param  {string} key   要操作的key
      * @param  {string|undefined|null} value 如果为空则为获取，如果为null则为删除，否则为设置
      */
-    pro.data = function(key, value){
+    prototype.data = function(key, value){
         var self = this;
 
         if(!key){
@@ -183,7 +183,7 @@ define(function(require){
      * @param {object} param 发送携带的参数，该参数会合并为 config.data
      * @param {string} type 请求的类型，有reload,page,request,init等
      */
-    pro.request = function(param, type){
+    prototype.request = function(param, type){
         var self = this,
             config = self.config;
 
@@ -269,7 +269,7 @@ define(function(require){
     /**
      * 渲染数据
      */
-    pro.__renderData = function(res){
+    prototype.__renderData = function(res){
         var self = this,
             config = self.config,
             html;
@@ -312,7 +312,7 @@ define(function(require){
     /**
      * 设置分页 1.0
      */
-    pro.__setPage = function(){
+    prototype.__setPage = function(){
         var self = this;
 
         if(self.__page_count < 2){
@@ -390,7 +390,7 @@ define(function(require){
     /**
      * 设置分页 2.0
      */
-    /*pro.__setPage = function(){
+    /*prototype.__setPage = function(){
         var self = this;
 
         if(self.__page_count < 2){
@@ -491,7 +491,7 @@ define(function(require){
     /**
      * 设置滚动条滚动到容器顶
      */
-    pro.scrollTo = function(){
+    prototype.scrollTo = function(){
         var top = this.$('wrap').offset().top;
         $('body, html').animate({ scrollTop: top + this.config.offsetTop}, 500, 'easeOutExpo')
     }
@@ -503,7 +503,7 @@ define(function(require){
      * @param  {string} name 要选择的东东，支持 wrap,page,list,loading
      * @return {jQuery}     jquery对象
      */
-    pro.$ = function(name){
+    prototype.$ = function(name){
         var dom = this.__dom;
         return dom[name] || (dom[name] = dom.wrap.find('[data-dom="'+ name +'"]'));
     }
@@ -513,7 +513,7 @@ define(function(require){
     /**
      * 刷新
      */
-    pro.reload = function(){
+    prototype.reload = function(){
         return this.request(null, 'reload'), this;
     }
 
