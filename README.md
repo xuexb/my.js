@@ -6,9 +6,9 @@
 
 ## list
 
-* [事件对象](https://github.com/xuexb/my.js/tree/master/src/module/event/)
-* [异步分页](https://github.com/xuexb/my.js/tree/master/src/module/ajaxPage/)
-* [图片加载](https://github.com/xuexb/my.js/tree/master/src/module/imgLoad/)
+* [事件对象](https://github.com/xuexb/my.js/tree/master/src/module/event)
+* [异步分页](https://github.com/xuexb/my.js/tree/master/src/module/ajaxPage)
+* [图片加载](https://github.com/xuexb/my.js/tree/master/src/module/imgLoad)
 
 ## install
 
