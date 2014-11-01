@@ -1,7 +1,8 @@
 /**
  * 异步分页
+ * @copyright 嫁拍
  * @author xieliang
- * @email admin@xuex.com
+ * @email admin@xuexb.com
  *
  * @example
  *     1, var demo = new AjaxPage({
