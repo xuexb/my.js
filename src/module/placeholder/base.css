@@ -1,0 +1,4 @@
+@charset "UTF-8";
+/*新版占位*/
+.ui-placeholder-wrap{position:relative;}
+.ui-placeholder-text{color:#b5b5b5;position:absolute;display:none;}
