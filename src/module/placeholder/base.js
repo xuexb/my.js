@@ -192,7 +192,7 @@ define(function(require) {
 		css.fontSize = $elem.css('font-size');
 
 		// css['height'] = $elem.outerHeight();
-		if (that.nodeName === 'TEXTAREA') {
+		if (that.nodeName.toLowerCase() === 'textarea') {
 			css.lineHeight = $elem.css('line-height');
 			css.paddingTop = $elem.css('padding-top');
 		} else {
