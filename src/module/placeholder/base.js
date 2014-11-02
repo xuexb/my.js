@@ -75,11 +75,12 @@ define(function(require) {
 	 * @return {object} 当前实例
 	 */
 	prototype.init = function() {
-		var config = this.config;
+		var self = this,
+			config = self.config;
 
 
 		// 遍历
-		this.__dom.elem.each(function() {
+		self.__dom.elem.each(function() {
 			var $that = $(this),
 				key,
 				value = $that.attr(nameSpace);
@@ -97,6 +98,11 @@ define(function(require) {
 			} else {
 				Placeholder.__bind($that, value);
 			}
+		});
+
+		//页面卸载前移除
+		$(window).on('beforeunload', function(){
+			self.destroy();
 		});
 	}
 
