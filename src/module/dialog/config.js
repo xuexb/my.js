@@ -5,7 +5,26 @@
  */
 
 define({
-    tpl: '',
+    tpl: '<div data-node="dialog" class="ui-dialog">\
+               <table class="ui-dialog-grid">\
+                   <tr>\
+                       <td data-node="header" class="ui-dialog-header">\
+                           <a herf="#" data-node="close" class="ui-dialog-close">&#215;</a>\
+                           <div data-node="title" class="ui-dialog-title"></div>\
+                       </td>\
+                   </tr>\
+                   <tr>\
+                       <td data-node="body" class="ui-dialog-body">\
+                           <div data-node="content" class="ui-dialog-content"></div>\
+                       </td>\
+                   </tr>\
+                   <tr>\
+                       <td data-node="footer" class="ui-dialog-footer">\
+                           <div data-node="buttons" class="ui-dialog-buttons"></div>\
+                       </td>\
+                   </tr>\
+               </table>\
+        </div>',
     id: null,
     width: 'auto',
     height: 'auto',
@@ -21,9 +40,9 @@ define({
     className: '',
     time: 0,
     show: true,
-    lock: false,
+    lock: true,
     fixed: false,
     zIndex: 2000,
-    backgroundColor: '',
-    backgroundOpacity: ''
+    backgroundColor: '#000',
+    backgroundOpacity: 0.3
 });

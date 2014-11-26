@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    loading
+
+
+    <script type="text/javascript" src="./src/seajs/sea.js" id="seajsnode"></script>
+    <script type="text/javascript" src="./src/seajs/seajs-css.js"></script>
+    <script type="text/javascript" src="./src/seajs/seajs-config.js"></script>
+    <script type="text/javascript">
+        seajs.use('module/dialog/dialog', function(Dialog){
+            var a = new Dialog({
+                title: 'test',
+                ok: 1,
+                cancel: 1,
+                id: '1',
+                width: 500,
+                className: 'test1'
+            }).button({
+                id: 'test',
+                value: '变钻石',
+                callback: function(){
+                    var self = this;
+
+                    self.button({
+                        id: 'zanshi',
+                        focus: true,
+                        disabled: false
+                    },{
+                        id: 'test',
+                        disabled: true
+                    });
+
+                    return !1;
+                }
+            }, {
+                id: 'zanshi',
+                value: '我是钻石',
+                disabled: true,
+                className: 'zanshi'
+            });
+
+            new Dialog({
+                title: 'test',
+                id: '2',
+                className: 'test2',
+                height: 100
+            });
+
+
+            var a = window.a = new Dialog({
+                content: 'test',
+                lock: true,
+                button: [
+                    {
+                        id: 'lock',
+                        value: '试试',
+                        callback: function(){
+                            this.locked ? this.unlock() : this.lock();
+                            this.button({
+                                id: 'lock',
+                                focus: !this.locked,
+                                value: !this.locked ? '来一个':'试试'
+                            })
+
+
+                            return false;
+                        }
+                    }
+                ]
+            }).unlock().lock();
+            console.log(a);
+        });
+    </script>
+</body>
+</html>
