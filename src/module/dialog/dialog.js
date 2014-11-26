@@ -280,6 +280,21 @@ define(function(require){
             self.close() : self;
     }
 
+    // prototype.config = function(key, val){
+    //     if('function' === typeof this[key]){
+    //         this[key](val);
+    //         return this;
+    //     }
+
+    //     if(val === void 0){
+    //         return this.config[key];
+    //     }
+
+    //     this.config[key] = val;
+
+    //     return this;
+    // }
+
 
     prototype.close = function(){
         var self = this,
@@ -487,21 +502,16 @@ define(function(require){
 
     /**
      * 设置标题
-     * @param  {string} str 设置标题
+     * @param  {string} text 设置标题
      * @return {self}
      */
-    prototype.title = function(str){
-        var self = this,
-            className = 'ui-dialog-noTitle'; //没有标题时的class
-        if (str === false) { //如果参数为false才不显示标题
-            self.$('title').hide().empty();
-            self.$('wrap').addClass(className);
-        } else {
-            self.$('title').html(str).show();
-            self.$('wrap').removeClass(className);
+    prototype.title = function(text){
+        if(text){
+            this.$('title').text(text);
         }
+        this.$('wrap')[text === false ? 'addClass' : 'removeClass']('ui-dialog-no-title');
 
-        return self;
+        return this;
     }
 
 

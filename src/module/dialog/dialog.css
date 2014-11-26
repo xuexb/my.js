@@ -51,6 +51,7 @@
     white-space: nowrap;
     border-bottom: 1px solid #E5E5E5;
 }
+
 .ui-dialog-close {
     text-decoration:none;
     position: absolute;
@@ -122,11 +123,6 @@
 .ui-dialog-buttons > .ui-dialog-button:first-child{
     margin-left:0;
 }
-.ui-dialog-button-focus {
-  outline: thin dotted #333;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
-}
 
 .ui-dialog-button:hover,
 .ui-dialog-button:focus {
@@ -187,4 +183,12 @@
   color: #ffffff;
   background-color: #3276b1;
   border-color: #285e8e;
+}
+
+
+.ui-dialog-no-title .ui-dialog-header{
+  border-bottom:none;
+}
+.ui-dialog-no-title .ui-dialog-title{
+  display:none;
 }
