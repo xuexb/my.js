@@ -30,7 +30,7 @@ define(function(require){
         // 根据ID判断是否重复
         config.id = config.id || __expando + (guid += 1);
         if(Dialog.list[config.id]){
-            return Dialog.list[config.id].zIndex();
+            return Dialog.list[config.id].focus();
         }
 
 
@@ -109,7 +109,7 @@ define(function(require){
             .width(config.width) //设置宽高
             .height(config.height) //设置宽高
             .time(config.time) //设置自动关闭
-            .zIndex() //置顶
+            
             .__addEvent(); //绑定事件
 
         self[config.show ? 'show' : 'hide'](); //去焦点.focus();//是否显示
@@ -124,13 +124,96 @@ define(function(require){
             self.lock(); //如果有遮罩
         }
 
-        self.position()
+        self.position().focus() //置顶
 
         if(config.initialize){
             config.initialize.call(self); //如果有初始化参数则call下
         }
 
         return self;
+    }
+
+
+    // 对元素安全聚焦
+    prototype.__focus = function (elem) {
+        // 防止 iframe 跨域无权限报错
+        // 防止 IE 不可见元素报错
+        try {
+            // ie11 bug: iframe 页面点击会跳到顶部
+            // if (this.autofocus && !/^iframe$/i.test(elem.nodeName)) {
+                elem.focus();
+            // }
+        } catch (e) {}
+    }
+    // 获取当前焦点的元素
+    prototype.__getActive = function () {
+        try {// try: ie8~9, iframe #26
+            var activeElement = document.activeElement;
+            var contentDocument = activeElement.contentDocument;
+            var elem = contentDocument && contentDocument.activeElement || activeElement;
+            return elem;
+        } catch (e) {}
+    }
+    // 置顶浮层
+    prototype.__zIndex = function () {
+    
+        var index = __config.zIndex += 2;
+        
+        // 设置叠加高度
+        this.$('wrap').css('zIndex', index);
+        
+        if(this.__cache.mask){
+            this.__cache.mask.css('zIndex', index - 1);
+        }
+    }
+    /** 让浮层获取焦点 */
+    prototype.focus = function () {
+
+        var node = this.$('wrap');
+        var current = Dialog.current;
+
+        if (current && current !== this) {
+            current.blur(false);
+        }
+
+        // 检查焦点是否在浮层里面
+        if (!$.contains(node, this.__getActive())) {
+            var autofocus = this.$('wrap').find('.ui-dialog-button-focus')[0];
+
+            if (!this._autofocus && autofocus) {
+                this._autofocus = true;
+            } else {
+                autofocus = node;
+            }
+
+            console.log(autofocus)
+
+            // this.__focus(autofocus);
+        }
+
+        this.__focus(node)
+
+        Dialog.current = this;
+        this.$('wrap').addClass(Dialog.className + '-focus');
+        this.__zIndex();
+
+        return this;
+    }
+    /** 让浮层失去焦点。将焦点退还给之前的元素，照顾视力障碍用户 */
+    prototype.blur = function () {
+
+        var activeElement = this.__activeElement;
+        var isBlur = arguments[0];
+
+
+        if (isBlur !== false) {
+            this.__focus(activeElement);
+        }
+
+        this._autofocus = false;
+        this.$('wrap').removeClass(Dialog.className + '-focus');
+
+        return this;
     }
 
 
@@ -174,7 +257,7 @@ define(function(require){
 
         self.$('wrap').addClass('ui-dialog-modal');
 
-        return self.zIndex();
+        return self;
     }
 
 
@@ -361,7 +444,7 @@ define(function(require){
         });
 
         self.$('wrap').on('mousedown', function() {
-            self.zIndex();
+            self.focus();
         });
     }
 
@@ -374,6 +457,7 @@ define(function(require){
         if (self.visibled === true) {
             return self;
         }
+
 
         self.visibled = true;
 
@@ -412,37 +496,6 @@ define(function(require){
     }
 
 
-    /** 置顶对话框 */
-    prototype.zIndex = function() {
-
-        var self = this,
-            top = Dialog.focus,
-            index = __config.zIndex += 2;
-
-        // 设置叠加高度
-        self.$('wrap').css('zIndex', index);
-        
-        if(self.__cache.mask){
-            self.__cache.mask.css('zIndex', index - 1);
-        }
-
-        // 设置最高层的样式
-        if(top){
-            top.$('wrap').removeClass('ui-dialog-focus');
-        }
-
-        Dialog.focus = self;
-        self.$('wrap').addClass('ui-dialog-focus');
-        // console.log(self.__focus_btn)
-
-        // if(self.__focus_btn){
-        //     self.__focus_btn.focus();
-        // } else {
-        //     self.$('wrap').focus();
-        // }
-
-        return self;
-    }
 
 
     /**
@@ -587,6 +640,7 @@ define(function(require){
 
     Dialog.focus = null;
 
+    Dialog.className = 'ui-dialog';
 
 
 
