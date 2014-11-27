@@ -40,7 +40,7 @@ define({
     className: '',
     time: 0,
     show: true,
-    lock: true,
+    lock: false,
     fixed: false,
     zIndex: 2000,
     backgroundColor: '#000',

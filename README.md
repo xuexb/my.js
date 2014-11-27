@@ -2,7 +2,12 @@
 
 > 基于 `jQuery` 和 `seajs` 的应用
 >
-> 如为标明均为原创
+> 如未特殊标明均为原创
+
+
+## 兼容
+
+不出意外的话兼容到IE7+
 
 ## list
 
@@ -12,7 +17,7 @@
 
 ## install
 
-``` shell
+```
 $ mkdir demo && cd demo
 
 $ git clone https://github.com/xuexb/my.js.git ./

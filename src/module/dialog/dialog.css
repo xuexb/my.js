@@ -95,6 +95,10 @@
 }
 .ui-dialog-content {
     padding: 20px;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  text-align: left;
 }
 .ui-dialog-footer {
     padding:20px;

@@ -14,7 +14,7 @@ define(function(require){
 
 
     var __config = require('./config'),
-        $ = require('../lib/jquery'),
+        $ = require('../../lib/jquery'),
         $window = $(window),
         prototype;
 
@@ -123,6 +123,8 @@ define(function(require){
         if(config.lock){
             self.lock(); //如果有遮罩
         }
+
+        self.position()
 
         if(config.initialize){
             config.initialize.call(self); //如果有初始化参数则call下
@@ -266,9 +268,9 @@ define(function(require){
             self.__focus_btn.focus();
         }
 
-        self.$('buttons')[args.length ? 'show' : 'hide']();
+        self.$('footer')[args.length ? 'show' : 'hide']();
 
-        return self.position();
+        return self;
     }
 
 
@@ -354,6 +356,8 @@ define(function(require){
             }
 
             return !1;
+        }).on('mousedown', 'a', function(event){
+            event.stopPropagation();
         });
 
         self.$('wrap').on('mousedown', function() {
@@ -429,6 +433,13 @@ define(function(require){
 
         Dialog.focus = self;
         self.$('wrap').addClass('ui-dialog-focus');
+        // console.log(self.__focus_btn)
+
+        // if(self.__focus_btn){
+        //     self.__focus_btn.focus();
+        // } else {
+        //     self.$('wrap').focus();
+        // }
 
         return self;
     }
@@ -480,21 +491,23 @@ define(function(require){
 
 
     prototype.position = function(){
-        var wrap = this.$('wrap')[0],
+        var wrap = this.$('wrap'),
             fixed = this.config.fixed, //判断是否为fixed定位
             dl = fixed ? 0 : $window.scrollLeft(), //如果不是则找到滚动条
             dt = fixed ? 0 : $window.scrollTop(), //同上
             ww = $window.width(), //窗口的宽
             wh = $window.height(), //窗口的高
-            ow = wrap.offsetWidth, //当前弹层的宽
-            oh = wrap.offsetHeight, //同上
+            ow = wrap.width(), //当前弹层的宽
+            oh = wrap.height(), //同上
             left = (ww - ow) / 2 + dl,
             top = (wh - oh) / 2 + dt;
 
         // console.log(ow, oh)
 
-        wrap.style.left = Math.max(parseInt(left), dl) + 'px';
-        wrap.style.top = Math.max(parseInt(top), dt) + 'px';
+        wrap.css({
+            left: Math.max(parseInt(left), dl),
+            top: Math.max(parseInt(top), dt)
+        });
 
         return this;
     }
@@ -573,6 +586,10 @@ define(function(require){
 
 
     Dialog.focus = null;
+
+
+
+
 window.dialog = Dialog;
 window.$= $;
     return Dialog;

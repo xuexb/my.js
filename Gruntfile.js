@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-    'use strict'; //严禁模式
+    'use strict';
 
     var config = grunt.file.readJSON('package.json'); //读取 package.json 配置
 
@@ -22,12 +22,14 @@ module.exports = function(grunt) {
     }
 
     // http服务配置
-    connect.options = {
-        port: '8888',
-        base: './',
-        hostname: '127.0.0.1',
-        keepalive: true,
-        open: true
+    connect.server = {
+        options: {
+            port: '81',
+            base: './',
+            hostname: '127.0.0.1',
+            keepalive: true,
+            open: true
+        }
     }
 
 
@@ -40,5 +42,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-connect');
 
-    grunt.registerTask('default', ['connect']);
+    grunt.registerTask('test', function(){
+        console.log('test');
+        grunt.task.run('connect')
+    });
 }
