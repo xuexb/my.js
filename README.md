@@ -11,13 +11,13 @@
 
 ## list
 
-* [事件对象](https://github.com/xuexb/my.js/tree/master/src/module/event)
-* [异步分页](https://github.com/xuexb/my.js/tree/master/src/module/ajaxPage)
-* [图片加载](https://github.com/xuexb/my.js/tree/master/src/module/imgLoad)
+* [事件对象](http://github.xuexb.com/src/module/event)
+* [异步分页](http://github.xuexb.com/src/module/ajaxPage)
+* [图片加载](http://github.xuexb.com/src/module/imgLoad)
 
 ## install
 
-```
+``` text
 $ mkdir demo && cd demo
 
 $ git clone https://github.com/xuexb/my.js.git ./

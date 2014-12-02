@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>{{title}}</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/monokai_sublime.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+
+
     <style type="text/css">
         
 /*markdown*/
@@ -131,7 +135,7 @@
     box-sizing:border-box
 }
 
-.markdown-body code, .markdown-body tt {
+/*.markdown-body code,*/ .markdown-body tt {
     padding:0 2px;
     padding-top:0.2em;
     padding-bottom:0.2em;
@@ -148,7 +152,7 @@
     text-decoration:inherit;
     vertical-align:text-top
 }
-.markdown-body pre>code {
+/*.markdown-body pre>code {
     padding:0;
     margin:0;
     font-size:100%;
@@ -173,9 +177,8 @@
     border:0
 }
 
-/*xl*/
 .markdown-body pre{border: 1px solid  #ccc;padding: 5px;border-radius:3px;background-color:rgba(0, 0, 0, 0.07);}
-
+*/
 
 
 
@@ -185,11 +188,13 @@ body{
 }
     </style>
 </head>
-<body>
+<body >
     
     <div class="markdown-body">
         {{body}}
     </div>
+    
 
+    <script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>
