@@ -39,12 +39,23 @@ module.exports = function(grunt) {
                     var url = Url.parse(req.url).pathname,
                         html, tpl;
 
+
+                    url = '.'+ url;
+
+                    
+                    //如果是目录
+                    if(url.substr(url.length - 1) === '/'){
+                        if (fs.existsSync(url + 'README.md')) {
+                            url += 'README.md';
+                        }
+                    }
+
                     // 如果不是md文档则下一个
-                    if (url.lastIndexOf('.md') !== url.length - 3) {
+                    if (url.substr(url.length - 3) !== '.md') {
                         return next();
                     }
 
-                    url = '.'+ url;
+                    
 
                     if (!fs.existsSync(url)) {
                         return res.end('404');
