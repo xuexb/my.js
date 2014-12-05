@@ -69,6 +69,9 @@ module.exports = function(grunt) {
                         return res.end('error');
                     }
 
+                    //本地化
+                    html = html.replace(/http\:\/\/github\.xuexb\.com/g, '');
+
                     // 读取模板内容
                     tpl = fs.readFileSync('./markdown.tpl').toString();
 
@@ -84,6 +87,7 @@ module.exports = function(grunt) {
                     // 替换标题
                     tpl = tpl.replace('{{title}}', html[1]);
 
+                    //输出
                     res.end(tpl);
                 });
 

@@ -180,7 +180,15 @@
 .markdown-body pre{border: 1px solid  #ccc;padding: 5px;border-radius:3px;background-color:rgba(0, 0, 0, 0.07);}
 */
 
-
+code{
+    padding:0 2px;
+    padding-top:0.2em;
+    padding-bottom:0.2em;
+    margin:0;
+    font-size:85%;
+    background-color:rgba(0, 0, 0, 0.1);
+    border-radius:3px
+}
 
 
 body{
